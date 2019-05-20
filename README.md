@@ -1,6 +1,6 @@
 # Disaster Response Pipeline Project
 A Flask web app that can help emergency workers analyze incoming messages and sort them into specific categories to speed up aid and contribute to more efficient distribution of people and other resources.
-###Dependencies
+### Dependencies
 *pandas
 *numpy
 *flask
@@ -11,7 +11,7 @@ A Flask web app that can help emergency workers analyze incoming messages and so
 *joblib
 
 
-###Description
+### Description
 -** ETL pipeline (data directory):**
 	*Merges messages and categories datasets
 	*Cleans the data and save it into a SQLite database
