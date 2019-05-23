@@ -10,7 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer,Tf
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import re
-from sklearn.metrics import classification_report,accuracy_score
+from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 import pickle
@@ -20,16 +20,36 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 
 def load_data(database_filepath):
+    """
+    Loads the dataframe from the specified database path
+    
+    Args:
+        database_filepath (str): path to the database containing messages data
+        
+    Returns:
+         X (Dataframe): Data frame features
+         Y (Dataframe): Data frame labels
+         category names (list): list of category columns
+    """
     # load data from database
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql("SELECT * FROM Messages", engine)
     X = df.message
     Y = df.iloc[:, 4:]
     return X,Y,list(Y.columns)
-    pass
+    
 
 
 def tokenize(text):
+    """
+    Tokenizes and preprocessed the provided text
+    
+    Args:
+        text (str): the text to be tokenized
+        
+    Returns:
+         Preprocessed words
+    """
       # Normalize Text
     text = re.sub(r"[^a-zA-Z0-9]", ' ', text.lower())
     tokens = word_tokenize(text)
@@ -45,7 +65,16 @@ def tokenize(text):
 
 
 def build_model():
-    pipeline = Pipeline([('tfidf',TfidfVectorizer()),
+    """
+    Builds the machine learning model
+    
+    Args:
+        None
+        
+    Returns:
+         GridSearchCV model
+    """
+    pipeline = Pipeline([('tfidf',TfidfVectorizer(tokenizer=tokenize)),
                     ('clf',MultiOutputClassifier(MultinomialNB()))])
     parameters = {
        'tfidf__max_df': (0.25, 0.5, 0.75,1),
@@ -59,6 +88,19 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Classifies and prints the classification report
+    
+    Args:
+        model: our model
+        X_test: the test set
+        Y_test: the actual test labels
+        category_names: a list of category names
+        
+        
+    Returns:
+         None
+    """
     y_pred = model.predict(X_test)
     for i in range(len(category_names)):
         print("Category: ", category_names[i],"\n", classification_report(Y_test.iloc[:, i].values, y_pred[:, i]))
@@ -66,12 +108,35 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Export the model to pickle file
+    
+    Args:
+        model: our model
+        model_filepath: file path of the pickle file 
+        
+        
+    Returns:
+         None
+    """
     with open(model_filepath, 'wb') as f: 
         pickle.dump(model, f, -1)      
     pass
 
 
 def main():
+    """
+    The main function
+    
+    This function will execute the machine learning pipeline:
+    1- load the data from the database
+    2- train the model
+    3- export the trained model
+        
+        
+    Returns:
+         None
+    """
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))

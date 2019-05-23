@@ -7,8 +7,8 @@ def load_data(messages_filepath, categories_filepath):
     Loads and merges the provided messages and categories datasets
     
     Args:
-        messages_filepath: path to the messages dataset
-        categories_filepath: path to the categories dataset
+        messages_filepath (str): path to the messages dataset
+        categories_filepath (str): path to the categories dataset
         
     Returns:
         A new dataset 
@@ -16,14 +16,25 @@ def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     return pd.merge(messages, categories, on='id')
-    pass
+    
 
 
 def clean_data(df):
+    """
+    Cleans the merged data frame
+    
+    Args:
+        df (Dataframe): path to the messages dataset
+        
+    Returns:
+        A cleaned data frame 
+    """
     #extract a list of new column names for categories
     categories = df['categories'].str.split(';',expand=True)
     first_row = categories.iloc[0]
     category_colnames = first_row.apply(lambda x: x.split('-')[0] )
+    categories.columns = category_colnames
+    categories.related[categories.related == 'related-2'] = 'related-1'
     #Iterate through the category columns in df to keep only the last character of each string (the 1 or 0)
     for column in categories:
         # set each value to be the last character of the string
@@ -38,16 +49,33 @@ def clean_data(df):
     # drop duplicates
     df = df.drop_duplicates(keep='first')
     return df
-    pass
+    
 
 
 def save_data(df, database_filename):
+    """
+    Saves the provided data frame into the specified database
+    
+    Args:
+        df (Dataframe): the messages dataframe
+        database_filename (str): database path
+        
+    """
     engine = create_engine('sqlite:///'+ database_filename)
     df.to_sql('Messages', engine, index=False,if_exists='replace')
-    pass  
+      
 
 
 def main():
+    """
+    Main function
+    
+    this function will execute the ETL pipeline:
+    1- invoke the 'load_data' function above and
+    2- pass the data to the 'clean_data', then
+    3- save the cleaned data frame into sqlite database by calling 'save_data' function 
+        
+    """
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
