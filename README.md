@@ -5,10 +5,9 @@
 1. [Dependencies](#depend)
 2. [Project Motivation](#motivation)
 3. [Content](#files)
-4. [Results](#analysis)
-5. [Instructions] (#instructions)
-6. [Licensing](#licensing)
-7. [Acknowledgements] (#ack)
+4. [Instructions](#instructions)
+5. [Licensing](#licensing)
+6. [Acknowledgements](#ack)
 
 
 ### Dependencies <a name="depend"></a>
