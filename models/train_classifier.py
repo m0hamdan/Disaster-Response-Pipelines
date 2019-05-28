@@ -78,9 +78,10 @@ def build_model():
 						('tfidf',TfidfTransformer()),
 						('clf',MultiOutputClassifier(MultinomialNB()))])
     parameters = {
-       'tfidf__max_df': (0.25, 0.5, 0.75,1),
+       #'tfidf__max_df': (0.25, 0.5, 0.75,1),
+	   'vect__ngram_range': ((1, 1), (1, 2)),
        #'tfidf__use_idf': (True, False),
-       'tfidf__ngram_range': [(1, 1), (1, 2), (1, 3)],
+       #'tfidf__ngram_range': [(1, 1), (1, 2), (1, 3)],
        'clf__estimator__alpha':[1, 0.1, 0.01, 0.001, 0.0001],
     }
 

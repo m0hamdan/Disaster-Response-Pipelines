@@ -1,5 +1,9 @@
 # Disaster Response Pipeline Project
 
+<img src='screenshots/1.png' />
+<br/>
+<img src='screenshots/2.png'  />
+<br/>
 ### Table of Contents
 
 1. [Dependencies](#depend)
@@ -23,7 +27,7 @@
 
 ### Project Motivation:<a name="motivation"></a>
 
-A Flask web app that can help emergency workers analyze incoming messages and sort them into specific categories to speed up aid and contribute to more efficient distribution of people and other resources.
+The main goal of this project is to build a web app that can help emergency workers analyze incoming messages and classify them into specific categories like Medical Help/Water/Search And Rescue.
 
 ### Content: <a name="files"></a>
 -** ETL pipeline (data directory):**
