@@ -74,16 +74,17 @@ def build_model():
     Returns:
          GridSearchCV model
     """
-    pipeline = Pipeline([('tfidf',TfidfVectorizer(tokenizer=tokenize)),
-                    ('clf',MultiOutputClassifier(MultinomialNB()))])
+    pipeline = Pipeline([('vect', CountVectorizer(tokenizer=tokenize)),
+						('tfidf',TfidfTransformer()),
+						('clf',MultiOutputClassifier(MultinomialNB()))])
     parameters = {
        'tfidf__max_df': (0.25, 0.5, 0.75,1),
-       'tfidf__use_idf': (True, False),
+       #'tfidf__use_idf': (True, False),
        'tfidf__ngram_range': [(1, 1), (1, 2), (1, 3)],
-       'clf__estimator__alpha':[1, 0.1, 0.01, 0.001, 0.0001, 0.00001],
+       'clf__estimator__alpha':[1, 0.1, 0.01, 0.001, 0.0001],
     }
 
-    return GridSearchCV(pipeline,param_grid=parameters,n_jobs=-1)
+    return GridSearchCV(pipeline,param_grid=parameters,n_jobs=1,cv=5)
     pass
 
 

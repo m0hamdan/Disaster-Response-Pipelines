@@ -56,7 +56,7 @@ A Flask web app that can help emergency workers analyze incoming messages and so
 4. Go to http://0.0.0.0:3001/
 
 ### Licensing <a name="licensing"></a>
-
+[![License: GNU GENERAL PUBLIC LICENSE]](https://raw.githubusercontent.com/m0hamdan/Disaster-Response-Pipelines/master/LICENSE)
 
 ### Acknowledgements <a name="ack"></a>
 
