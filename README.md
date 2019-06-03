@@ -1,8 +1,9 @@
 # Disaster Response Pipeline Project
 
 <img src='screenshots/1.png' />
+![alt text](https://raw.githubusercontent.com/m0hamdan/Disaster-Response-Pipelines/master/screenshots/1.PNG)
 <br/>
-<img src='screenshots/2.png'  />
+![alt text](https://raw.githubusercontent.com/m0hamdan/Disaster-Response-Pipelines/master/screenshots/2.PNG)
 <br/>
 ### Table of Contents
 
